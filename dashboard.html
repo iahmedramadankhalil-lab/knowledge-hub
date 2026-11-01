@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Knowledge Hub Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;700&display=swap">
+<style>
+/* Layout: summary strip, then the six-stage journey as a vertical ladder, then the priority track */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --ink:#1d2a26; --muted:#5d6b66; --line:#d9ddd4;
+  --accent:#b8661c; --accent-soft:#f6e6d4; --good:#2e7d4f; --good-soft:#e1f1e7;
+  --display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a18; --surface:#1c2421; --ink:#e7ece8; --muted:#9aa8a2; --line:#2e3935;
+  --accent:#e09a4f; --accent-soft:#3a2a1a; --good:#5cc489; --good-soft:#1d3327; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a18; --surface:#1c2421; --ink:#e7ece8; --muted:#9aa8a2; --line:#2e3935;
+  --accent:#e09a4f; --accent-soft:#3a2a1a; --good:#5cc489; --good-soft:#1d3327; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1100px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:32px}
+h1,h2,h3{font-family:var(--display);line-height:1.35;text-wrap:balance;margin:0}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px}
+header h1{font-size:clamp(26px,4vw,36px)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat b{font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.next{background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:16px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.next h3{font-size:18px}
+.btn{display:inline-flex;font:inherit;font-weight:600;font-size:15px;padding:8px 18px;border-radius:6px;background:var(--accent);color:#fff;text-decoration:none;border:0}
+.btn:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ladder{display:flex;flex-direction:column;gap:10px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:8px}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center}
+summary::-webkit-details-marker{display:none}
+.num{font-family:var(--mono);font-size:13px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);color:var(--muted)}
+.num.on{border-color:var(--accent);color:var(--accent)}
+.st-title{display:flex;flex-direction:column;min-width:0}
+.st-title h3{font-size:18px}
+.st-title small{color:var(--muted)}
+.meter{display:flex;flex-direction:column;align-items:end;gap:4px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{width:110px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.courses{list-style:none;margin:0;padding:0 16px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.course{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:6px;min-width:0}
+.course a{color:inherit;text-decoration:none}
+.course .t{display:flex;flex-direction:column;min-width:0}
+.course .t b{font-weight:600;font-size:15px}
+.course .t small{color:var(--muted);font-size:12px}
+.pill{font-size:11px;padding:1px 8px;border-radius:999px;white-space:nowrap;border:1px solid var(--line);color:var(--muted);margin-inline-start:auto}
+.pill.avail{border-color:var(--accent);color:var(--accent)}
+.pill.prog{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.pill.done{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.note{font-size:13px;color:var(--muted)}
+@media (max-width:520px){summary{grid-template-columns:auto minmax(0,1fr)}.meter{grid-column:2;align-items:start}}
+</style>
+
+<div class="wrap" dir="rtl" lang="ar">
+  <header>
+    <div><div class="eyebrow">The Knowledge Hub</div><h1>رحلة التعلم بتاعتك</h1></div>
+    <span class="note">6 مراحل · 53 كورس أساسي · Track 17</span>
+  </header>
+  <section class="stats" id="stats" aria-label="ملخص التقدم"></section>
+  <section class="next" id="next"></section>
+  <section><h2 style="font-size:22px;margin-bottom:12px">المراحل الست</h2><div class="ladder" id="ladder"></div></section>
+  <section><h2 style="font-size:22px;margin-bottom:12px">Track 17 · AI-Powered Business Transformation</h2><ul class="courses" style="padding:0" id="track"></ul></section>
+  <p class="note">التقدم محفوظ على المتصفح ده بس، والتعليم على الدروس ذاتي ومش شهادة معتمدة.</p>
+</div>
+
+<script>window.CURRICULUM={"stages": [{"id": "ST01", "en": "Foundation", "ar": "الأساس", "level": "Beginner", "courses": [{"id": "ST01-CRS01", "en": "Learning How to Learn", "ar": "إزاي تتعلم صح", "lessons": 12, "available": true}, {"id": "ST01-CRS02", "en": "Critical Thinking", "ar": "التفكير النقدي", "lessons": null, "available": false}, {"id": "ST01-CRS03", "en": "Problem Solving & Root Cause Analysis", "ar": "حل المشكلات وتحليل السبب الجذري", "lessons": null, "available": false}, {"id": "ST01-CRS04", "en": "Business Fundamentals", "ar": "أساسيات البيزنس", "lessons": null, "available": false}, {"id": "ST01-CRS05", "en": "Professional Communication", "ar": "التواصل المهني", "lessons": null, "available": false}, {"id": "ST01-CRS06", "en": "Business English Foundations", "ar": "أساسيات إنجليزي البيزنس", "lessons": null, "available": false}, {"id": "ST01-CRS07", "en": "Digital & AI Literacy", "ar": "الثقافة الرقمية والـ AI", "lessons": null, "available": false}, {"id": "ST01-CRS08", "en": "Productivity & Time Management", "ar": "الإنتاجية وإدارة الوقت", "lessons": null, "available": false}]}, {"id": "ST02", "en": "Professional Skills", "ar": "المهارات المهنية", "level": "Intermediate", "courses": [{"id": "ST02-CRS01", "en": "Advanced Business Communication", "ar": "التواصل المهني المتقدم", "lessons": null, "available": false}, {"id": "ST02-CRS02", "en": "Negotiation Fundamentals", "ar": "أساسيات التفاوض", "lessons": null, "available": false}, {"id": "ST02-CRS03", "en": "Persuasion & Influence", "ar": "الإقناع والتأثير", "lessons": null, "available": false}, {"id": "ST02-CRS04", "en": "Public Speaking & Presentation", "ar": "الإلقاء والعروض", "lessons": null, "available": false}, {"id": "ST02-CRS05", "en": "Business Writing & Reporting", "ar": "كتابة التقارير والمراسلات", "lessons": null, "available": false}, {"id": "ST02-CRS06", "en": "Data-Driven Decision Making", "ar": "القرار المبني على البيانات", "lessons": null, "available": false}, {"id": "ST02-CRS07", "en": "AI Productivity & Prompt Engineering", "ar": "الإنتاجية بالـ AI والـ Prompts", "lessons": null, "available": false}, {"id": "ST02-CRS08", "en": "Financial Literacy for Professionals", "ar": "الثقافة المالية للمحترفين", "lessons": null, "available": false}]}, {"id": "ST03", "en": "Business & Revenue Generation", "ar": "البيزنس وتوليد الإيراد", "level": "Advanced", "courses": [{"id": "ST03-CRS01", "en": "Business Development Mastery", "ar": "تطوير الأعمال", "lessons": null, "available": false}, {"id": "ST03-CRS02", "en": "B2B & Consultative Selling", "ar": "البيع B2B والبيع الاستشاري", "lessons": null, "available": false}, {"id": "ST03-CRS03", "en": "Strategic Negotiation", "ar": "التفاوض الاستراتيجي", "lessons": null, "available": false}, {"id": "ST03-CRS04", "en": "Marketing Strategy", "ar": "استراتيجية التسويق", "lessons": null, "available": false}, {"id": "ST03-CRS05", "en": "Market Research & Competitive Intelligence", "ar": "أبحاث السوق وتحليل المنافسين", "lessons": null, "available": false}, {"id": "ST03-CRS06", "en": "Business Models & Entrepreneurship", "ar": "نماذج الأعمال وريادة الأعمال", "lessons": null, "available": false}, {"id": "ST03-CRS07", "en": "Financial Modeling & Business Analysis", "ar": "النمذجة المالية وتحليل الأعمال", "lessons": null, "available": false}, {"id": "ST03-CRS08", "en": "Revenue Growth & CRM Strategy", "ar": "نمو الإيرادات والـ CRM", "lessons": null, "available": false}]}, {"id": "ST04", "en": "Management & Leadership", "ar": "الإدارة والقيادة", "level": "Advanced", "courses": [{"id": "ST04-CRS01", "en": "Leadership Fundamentals", "ar": "أساسيات القيادة", "lessons": null, "available": false}, {"id": "ST04-CRS02", "en": "People Management & Human Behavior", "ar": "إدارة الأفراد والسلوك البشري", "lessons": null, "available": false}, {"id": "ST04-CRS03", "en": "Team Building & High-Performance Teams", "ar": "بناء الفرق عالية الأداء", "lessons": null, "available": false}, {"id": "ST04-CRS04", "en": "Performance Management & KPIs", "ar": "إدارة الأداء والـ KPIs", "lessons": null, "available": false}, {"id": "ST04-CRS05", "en": "Conflict Management & Difficult Conversations", "ar": "إدارة الخلافات والمحادثات الصعبة", "lessons": null, "available": false}, {"id": "ST04-CRS06", "en": "Delegation & Accountability", "ar": "التفويض والمحاسبية", "lessons": null, "available": false}, {"id": "ST04-CRS07", "en": "Operations & Process Management", "ar": "إدارة العمليات والإجراءات", "lessons": null, "available": false}, {"id": "ST04-CRS08", "en": "Project Management & Agile", "ar": "إدارة المشروعات والـ Agile", "lessons": null, "available": false}, {"id": "ST04-CRS09", "en": "Change Management", "ar": "إدارة التغيير", "lessons": null, "available": false}, {"id": "ST04-CRS10", "en": "Risk Management & Business Continuity", "ar": "إدارة المخاطر واستمرارية الأعمال", "lessons": null, "available": false}]}, {"id": "ST05", "en": "Strategic Leadership", "ar": "القيادة الاستراتيجية", "level": "Expert", "courses": [{"id": "ST05-CRS01", "en": "Strategic Management", "ar": "الإدارة الاستراتيجية", "lessons": null, "available": false}, {"id": "ST05-CRS02", "en": "Corporate Strategy & Portfolio Management", "ar": "استراتيجية الشركة وإدارة المحفظة", "lessons": null, "available": false}, {"id": "ST05-CRS03", "en": "Business Transformation", "ar": "التحول المؤسسي", "lessons": null, "available": false}, {"id": "ST05-CRS04", "en": "Strategic Finance & Capital Allocation", "ar": "التمويل الاستراتيجي وتوزيع رأس المال", "lessons": null, "available": false}, {"id": "ST05-CRS05", "en": "Competitive Intelligence & Industry Analysis", "ar": "تحليل الصناعة والمنافسة", "lessons": null, "available": false}, {"id": "ST05-CRS06", "en": "Organizational Design & Culture", "ar": "التصميم التنظيمي والثقافة", "lessons": null, "available": false}, {"id": "ST05-CRS07", "en": "Executive Decision Making", "ar": "صناعة القرار التنفيذي", "lessons": null, "available": false}, {"id": "ST05-CRS08", "en": "Corporate Governance & Compliance", "ar": "الحوكمة والامتثال", "lessons": null, "available": false}, {"id": "ST05-CRS09", "en": "AI & Digital Transformation Strategy", "ar": "استراتيجية الـ AI والتحول الرقمي", "lessons": null, "available": false}]}, {"id": "ST06", "en": "Executive Mastery", "ar": "الإتقان التنفيذي", "level": "Executive", "courses": [{"id": "ST06-CRS01", "en": "CEO Mindset & Executive Responsibilities", "ar": "عقلية الـ CEO ومسؤولياته", "lessons": null, "available": false}, {"id": "ST06-CRS02", "en": "Executive Leadership & Organizational Influence", "ar": "القيادة التنفيذية والتأثير المؤسسي", "lessons": null, "available": false}, {"id": "ST06-CRS03", "en": "Mergers, Acquisitions & Strategic Partnerships", "ar": "الاندماج والاستحواذ والشراكات", "lessons": null, "available": false}, {"id": "ST06-CRS04", "en": "Corporate Finance & Investment Strategy", "ar": "تمويل الشركات والاستثمار", "lessons": null, "available": false}, {"id": "ST06-CRS05", "en": "Global Business & International Expansion", "ar": "التوسع الدولي", "lessons": null, "available": false}, {"id": "ST06-CRS06", "en": "Organizational Excellence & Corporate Performance", "ar": "التميز المؤسسي", "lessons": null, "available": false}, {"id": "ST06-CRS07", "en": "Executive Negotiation & Boardroom Communication", "ar": "التفاوض التنفيذي ومجلس الإدارة", "lessons": null, "available": false}, {"id": "ST06-CRS08", "en": "Entrepreneurship & Venture Building", "ar": "بناء المشروعات الناشئة", "lessons": null, "available": false}, {"id": "ST06-CRS09", "en": "AI-First Enterprise & Future of Business", "ar": "المؤسسة القائمة على الـ AI", "lessons": null, "available": false}, {"id": "ST06-CRS10", "en": "Crisis Leadership & Business Resilience", "ar": "قيادة الأزمات ومرونة الأعمال", "lessons": null, "available": false}]}], "track": [{"id": "SP17-A", "en": "AI Workflow Automation & Integrations", "available": false}, {"id": "SP17-B", "en": "Applied AI Solutions, LLMs & Business Agents", "available": false}, {"id": "SP17-C", "en": "Business Intelligence: Excel, Power Query, SQL & Power BI", "available": false}, {"id": "SP17-D", "en": "Operations Excellence, Cost Control & Process Management", "available": false}, {"id": "SP17-E", "en": "Business Transformation Consulting, ROI & Solution Delivery", "available": false}, {"id": "SP17-F", "en": "Enterprise B2B Sales, Consultative Selling & RevOps", "available": false}, {"id": "SP17-G", "en": "Executive Business English & Global Client Communication", "available": false}]};</script>
+<script>
+(function(){
+  var MAP=window.CURRICULUM;
+  var COURSE_URL="index.html"; // course page next to this dashboard on Vercel
+  function prog(id){try{return JSON.parse(localStorage.getItem("kh-progress-"+id))||{}}catch(e){return {}}}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function state(c){
+    if(!c.available)return{k:"soon",t:"قريبًا",d:0};
+    var p=prog(c.id),d=Object.keys(p).filter(function(k){return /^L\d-\d$/.test(k)&&p[k]}).length;
+    var quiz=p["quiz-M1"];
+    if(c.lessons&&d>=3&&quiz>=80)return{k:"done",t:"Module 1 خلص",d:d,q:quiz};
+    if(d>0||quiz!=null)return{k:"prog",t:"شغال فيه",d:d,q:quiz};
+    return{k:"avail",t:"متاح",d:0};
+  }
+  var all=[],avail=0,started=0,lessonsDone=0,quizzes=[];
+  MAP.stages.forEach(function(s){s.courses.forEach(function(c){var st=state(c);c.st=st;all.push(c);if(c.available)avail++;if(st.k==="prog"||st.k==="done")started++;lessonsDone+=st.d;if(st.q!=null)quizzes.push(st.q)})});
+  var stats=[[all.length,"كورس أساسي"],[avail,"كورس متاح دلوقتي"],[started,"كورس بدأته"],[lessonsDone,"درس خلصته"],[quizzes.length?quizzes[0]+"%":"—","آخر نتيجة Quiz"]];
+  document.getElementById("stats").innerHTML=stats.map(function(s){return '<div class="stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'}).join("");
+
+  var first=all[0],st=first.st;
+  var nextLesson=st.d<3?"Lesson 1."+(st.d+1):"Quiz الـ Module 1";
+  document.getElementById("next").innerHTML='<div><div class="eyebrow">الخطوة الجاية</div><h3>'+esc(first.ar)+' · '+nextLesson+'</h3><span class="note mono">'+first.id+'</span></div><a class="btn" href="'+COURSE_URL+'">'+(st.k==="avail"?"ابدأ الكورس":"كمّل")+'</a>';
+
+  document.getElementById("ladder").innerHTML=MAP.stages.map(function(s,i){
+    var a=s.courses.filter(function(c){return c.available}).length,act=s.courses.some(function(c){return c.st.k!=="soon"});
+    var pct=Math.round(100*s.courses.filter(function(c){return c.st.k==="done"}).length/s.courses.length);
+    return '<details'+(i===0?' open':'')+'><summary><span class="num'+(act?' on':'')+'">'+s.id.slice(2)+'</span>'
+      +'<span class="st-title"><h3>'+esc(s.ar)+'</h3><small><span class="mono">'+esc(s.en)+'</span> · '+s.level+' · '+s.courses.length+' كورسات</small></span>'
+      +'<span class="meter">'+a+' متاح · '+pct+'% خلص<span class="bar"><i style="width:'+pct+'%"></i></span></span></summary>'
+      +'<ul class="courses">'+s.courses.map(function(c){
+        var inner='<span class="t"><b>'+esc(c.ar)+'</b><small class="mono">'+c.id+' · '+esc(c.en)+'</small></span><span class="pill '+c.st.k+'">'+c.st.t+'</span>';
+        return '<li class="course">'+(c.available?'<a href="'+COURSE_URL+'" style="display:flex;gap:10px;width:100%">'+inner+'</a>':inner)+'</li>';
+      }).join("")+'</ul></details>';
+  }).join("");
+
+  document.getElementById("track").innerHTML=MAP.track.map(function(c){
+    return '<li class="course"><span class="t"><b class="mono" style="text-align:right">'+esc(c.en)+'</b><small class="mono">'+c.id+'</small></span><span class="pill soon">قريبًا</span></li>';
+  }).join("");
+})();
+</script>
+
+</body>
+</html>
