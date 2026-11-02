@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 </head>
 <body>
+<script>window.KH_COURSE="ST01-CRS01";window.KH_DATA="st01-crs01.json";</script>
 <title>Knowledge Hub</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,7 +94,7 @@ main{min-width:0;display:flex;flex-direction:column;gap:28px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>
 (function(){
-  var KEY="kh-progress-ST01-CRS01", course=null, lessons=[];
+  var KEY="kh-progress-"+(window.KH_COURSE||"ST01-CRS01"), course=null, lessons=[];
   function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
   function save(p){try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
   var prog=load();
@@ -101,7 +102,7 @@ main{min-width:0;display:flex;flex-direction:column;gap:28px}
   function slug(id){return id.toLowerCase()}
 
   function rail(current){
-    var h='<a class="brand" href="#home">Knowledge Hub</a><div class="eyebrow">'+course.courseId+'</div>';
+    var h='<a class="brand" href="/dashboard">Knowledge Hub</a><a class="note" href="#home">صفحة الكورس</a><div class="eyebrow">'+course.courseId+'</div>';
     course.modules.forEach(function(m){
       h+='<div class="mod"><h3>'+esc(m.id+" · "+(m.titleAr||m.titleEn))+'</h3>';
       m.lessons.forEach(function(l){
@@ -193,7 +194,7 @@ main{min-width:0;display:flex;flex-direction:column;gap:28px}
     window.scrollTo(0,0);
   }
 
-  fetch("st01-crs01.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(c){
+  fetch(window.KH_DATA||"data/st01-crs01.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(c){
     course=c;c.modules.forEach(function(m){if(m.available)m.lessons.forEach(function(l){l.mod=m.id;lessons.push(l)})});
     window.addEventListener("hashchange",route);route();
   }).catch(function(){document.getElementById("main").innerHTML='<p class="err">ملف الكورس ما اتحملش. لو بتفتح الصفحة من الكمبيوتر مباشرة، شغّلها من سيرفر محلي (اقرا README).</p>'});
