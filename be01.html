@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Business English Lab</title>
+<script>window.KH_COURSE="BE01";window.KH_DATA="be01.json";</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400;500;600&family=Readex+Pro:wght@500;700&display=swap">
+<style>
+:root{--bg:#f3f4ef;--surface:#fff;--ink:#1d2a26;--muted:#5d6b66;--line:#d9ddd4;--accent:#b8661c;--accent-soft:#f6e6d4;--good:#2e7d4f;--good-soft:#e1f1e7;--bad:#b3261e;--bad-soft:#fbe4e2;
+--display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;--en:"Inter","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a18;--surface:#1c2421;--ink:#e7ece8;--muted:#9aa8a2;--line:#2e3935;--accent:#e09a4f;--accent-soft:#3a2a1a;--good:#5cc489;--good-soft:#1d3327;--bad:#f2867c;--bad-soft:#3a1f1d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141a18;--surface:#1c2421;--ink:#e7ece8;--muted:#9aa8a2;--line:#2e3935;--accent:#e09a4f;--accent-soft:#3a2a1a;--good:#5cc489;--good-soft:#1d3327;--bad:#f2867c;--bad-soft:#3a1f1d;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 80px}
+nav.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+nav.top a{color:var(--muted);text-decoration:none;font-size:14px}
+h1,h2,h3{font-family:var(--display);line-height:1.35;margin:0 0 8px}
+h1{font-size:clamp(24px,4vw,32px)}h2{font-size:21px;margin-top:28px}h3{font-size:17px}
+.en{font-family:var(--en);direction:ltr;text-align:left;unicode-bidi:isolate}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+.muted{color:var(--muted)}.small{font-size:13px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;margin:12px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,.btn{font:inherit;font-size:14px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+button.pri,.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.rec{border-color:var(--bad);color:var(--bad)}button.rec.on{background:var(--bad);color:#fff}
+.mods{display:flex;flex-direction:column;gap:10px}
+.mods a{display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:inherit;text-decoration:none}
+.mods a b{font-weight:600}.mods .tick{margin-inline-start:auto;font-size:12px;color:var(--muted)}.mods .tick.ok{color:var(--good)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:2;border-bottom:1px solid var(--line)}
+.tabs button{font-size:13px;padding:4px 10px}.tabs button.cur{background:var(--accent-soft);border-color:var(--accent)}.tabs button.done::after{content:" ✓";color:var(--good)}
+.para{font-size:17px;line-height:1.9}
+.para .w{cursor:pointer;border-radius:3px}.para .w:hover{background:var(--accent-soft)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:start;vertical-align:top}
+.line{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:12px 0;border-bottom:1px solid var(--line)}
+.line:last-child{border-bottom:0}
+.line .t{font-size:17px}
+.diff span{padding:0 2px;border-radius:3px}.diff .ok{background:var(--good-soft);color:var(--good)}.diff .miss{background:var(--bad-soft);color:var(--bad);text-decoration:underline}
+.score{font-family:var(--mono);font-weight:600}
+.dlg{display:flex;flex-direction:column;gap:6px}.dlg p{margin:0;padding:6px 10px;border-radius:6px;background:var(--bg)}.dlg p b{font-family:var(--mono);font-size:12px;color:var(--accent);margin-inline-end:6px}
+.hide{filter:blur(6px);user-select:none}
+.q{margin:14px 0}.q label{display:flex;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;margin:4px 0;cursor:pointer}
+.q label.right{border-color:var(--good);background:var(--good-soft)}.q label.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.timer{font-family:var(--mono);font-size:28px;font-weight:600}
+ul.check{list-style:none;padding:0;margin:8px 0}ul.check li label{display:flex;gap:8px}
+textarea{width:100%;min-height:140px;font:inherit;font-family:var(--en);direction:ltr;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+select{font:inherit;font-size:13px;padding:4px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.note{background:var(--accent-soft);border-inline-start:3px solid var(--accent);padding:10px 12px;border-radius:6px;font-size:14px}
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pairs button{justify-content:center;font-family:var(--en)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top"><a href="/dashboard">← Knowledge Hub</a>
+    <span class="row small"><span class="muted">الصوت:</span><select id="voice" aria-label="Voice"></select>
+    <select id="rate" aria-label="Speed"><option value="0.75">0.75×</option><option value="0.9" selected>0.9×</option><option value="1">1×</option></select></span></nav>
+  <main id="app"><p class="muted">بيحمّل…</p></main>
+</div>
+<script>
+(function(){
+var C=window.KH_COURSE, KEY="kh-progress-"+C, data=null, app=document.getElementById("app");
+function P(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+function save(k,v){var p=P();p[k]=v;try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+/* ---------- speech ---------- */
+var synth=window.speechSynthesis, voices=[], vSel=document.getElementById("voice"), rSel=document.getElementById("rate");
+function loadVoices(){ if(!synth)return; voices=synth.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang)});
+  var keep=vSel.value; vSel.innerHTML=voices.map(function(v,i){return '<option value="'+i+'">'+esc(v.name.replace(/Microsoft |Google /,""))+' ('+v.lang+')</option>'}).join("");
+  var pref=voices.findIndex(function(v){return /en-US/i.test(v.lang)&&/natural|google|samantha|aria|jenny/i.test(v.name)}); if(pref<0)pref=voices.findIndex(function(v){return /en-US/i.test(v.lang)});
+  vSel.value=keep||String(Math.max(pref,0)); }
+if(synth){loadVoices(); synth.onvoiceschanged=loadVoices}
+function altVoice(){var cur=+vSel.value, other=voices.findIndex(function(v,i){return i!==cur&&/en-(GB|US)/i.test(v.lang)});return other<0?cur:other}
+function say(text,opt){ if(!synth){alert("المتصفح ده مش بيدعم القراية بالصوت. جرّب Chrome أو Edge.");return Promise.resolve()}
+  opt=opt||{}; return new Promise(function(res){var u=new SpeechSynthesisUtterance(text); var v=voices[opt.voice!=null?opt.voice:+vSel.value]; if(v){u.voice=v;u.lang=v.lang}else u.lang="en-US";
+    u.rate=(opt.rate||+rSel.value); u.onend=res; u.onerror=res; synth.speak(u)}) }
+function stop(){if(synth)synth.cancel()}
+/* recording */
+var rec=null, chunks=[];
+function startRec(btn,out){ if(!navigator.mediaDevices||!window.MediaRecorder){out.innerHTML='<span class="muted small">التسجيل مش متاح في المتصفح ده.</span>';return}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){ chunks=[]; rec=new MediaRecorder(s); rec.ondataavailable=function(e){chunks.push(e.data)};
+    rec.onstop=function(){s.getTracks().forEach(function(t){t.stop()}); var url=URL.createObjectURL(new Blob(chunks,{type:rec.mimeType})); out.innerHTML='<audio controls src="'+url+'"></audio>'; btn.classList.remove("on"); btn.textContent="🎙 سجّل"};
+    rec.start(); btn.classList.add("on"); btn.textContent="■ وقّف" }).catch(function(){out.innerHTML='<span class="muted small">محتاج تسمح باستخدام المايك.</span>'}) }
+function toggleRec(btn,out){ if(rec&&rec.state==="recording"){rec.stop();return} startRec(btn,out) }
+/* pronunciation check (Web Speech API) */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function norm(s){return s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9' ]+/g," ").split(/\s+/).filter(Boolean)}
+function compare(target,heard){ var t=norm(target),h=norm(heard),hs={};h.forEach(function(w){hs[w]=(hs[w]||0)+1}); var ok=0;
+  var html=t.map(function(w){ if(hs[w]){hs[w]--;ok++;return '<span class="ok">'+w+'</span>'} return '<span class="miss">'+w+'</span>'}).join(" ");
+  return {pct:Math.round(100*ok/t.length),html:html} }
+function check(target,out,key){ if(!SR){out.innerHTML='<span class="muted small">فحص النطق محتاج Chrome أو Edge على الكمبيوتر أو أندرويد. استخدم التسجيل وقارن بودنك.</span>';return}
+  var r=new SR(); r.lang="en-US"; r.interimResults=false; r.maxAlternatives=1; out.innerHTML='<span class="muted small">اتكلم دلوقتي…</span>';
+  r.onresult=function(e){var heard=e.results[0][0].transcript, c=compare(target,heard);
+    out.innerHTML='<div class="small muted">اتسمع: <span class="en">'+esc(heard)+'</span></div><div class="diff en">'+c.html+'</div><div>الدقة: <span class="score">'+c.pct+'%</span> '+(c.pct>=90?"ممتاز":c.pct>=70?"كويس، عيد الكلمات الحمرا":"اسمع تاني بالسرعة البطيئة وعيد")+'</div>';
+    if(key){var best=P()[key]||0;if(c.pct>best)save(key,c.pct)} };
+  r.onerror=function(e){out.innerHTML='<span class="muted small">ما اتسمعش كويس ('+esc(e.error)+'). جرّب تاني في مكان هادي.</span>'}; r.start() }
+/* ---------- views ---------- */
+function home(){ var p=P();
+  app.innerHTML='<div class="small mono muted">'+data.courseId+' · '+esc(data.trackTitle)+'</div><h1 class="en">'+esc(data.titleEn)+'</h1><h2 style="margin-top:0">'+esc(data.titleAr)+'</h2><p>'+esc(data.descriptionAr)+'</p>'
+  +'<div class="note">كل درس فيه 7 خطوات: قراية، وكلمات، ونطق، وShadowing، وListening، وSpeaking، وكتابة. اعمل الدرس بصوت عالي، مش بعينك بس. 20–30 دقيقة في اليوم أحسن من 3 ساعات مرة في الأسبوع.</div>'
+  +(SR?'':'<p class="small muted">فحص النطق الأوتوماتيك شغال على Chrome وEdge. باقي الخطوات شغالة في أي متصفح.</p>')
+  +data.modules.map(function(m){return '<h2>'+m.id+' · '+esc(m.titleAr)+' <span class="en muted small">'+esc(m.titleEn)+'</span></h2><div class="mods">'+m.lessons.map(function(l){var d=STEPS.filter(function(s){return p[l.id+":"+s]}).length;
+    return '<a href="#'+l.id.toLowerCase()+'"><span class="mono muted">'+l.id.slice(1).replace("-",".")+'</span><span><b class="en">'+esc(l.titleEn)+'</b><br><span class="small muted">'+esc(l.titleAr)+'</span></span><span class="tick'+(d===STEPS.length?' ok':'')+'">'+d+'/'+STEPS.length+'</span></a>'}).join("")+'</div>'}).join("") }
+var STEPS=["read","vocab","pron","shadow","listen","speak","write"], NAMES={read:"قراية",vocab:"كلمات",pron:"نطق",shadow:"Shadowing",listen:"Listening",speak:"Speaking",write:"كتابة"};
+function lesson(l,step){ var p=P(); step=step||"read"; stop();
+  var all=[];data.modules.forEach(function(m){all=all.concat(m.lessons)}); var i=all.indexOf(l), nx=all[i+1];
+  app.innerHTML='<div class="small"><a href="#home" class="muted">صفحة الكورس</a> · <span class="mono muted">'+l.id+'</span></div><h1 class="en">'+esc(l.titleEn)+'</h1><p class="muted" style="margin-top:0">'+esc(l.titleAr)+' — '+esc(l.goalAr)+'</p>'
+   +'<div class="tabs">'+STEPS.map(function(s){return '<button data-s="'+s+'" class="'+(s===step?'cur ':'')+(p[l.id+":"+s]?'done':'')+'">'+NAMES[s]+'</button>'}).join("")+'</div><section id="st"></section>'
+   +'<div class="row" style="margin-top:20px"><button class="pri" id="done">خلّصت الخطوة دي ←</button>'+(nx?'<a class="btn" href="#'+nx.id.toLowerCase()+'">الدرس الجاي</a>':'')+'</div>';
+  app.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){lesson(l,b.dataset.s)}});
+  document.getElementById("done").onclick=function(){save(l.id+":"+step,1); var pp=P(); if(STEPS.every(function(s){return pp[l.id+":"+s]}))save(l.id,1); var n=STEPS[STEPS.indexOf(step)+1]; if(n)lesson(l,n); else location.hash=nx?"#"+nx.id.toLowerCase():"#home"; window.scrollTo(0,0)};
+  var st=document.getElementById("st"); R[step](l,st) }
+var R={
+ read:function(l,st){ var r=l.read;
+  st.innerHTML='<h2>1 · اقرا واسمع</h2><p class="small muted">اسمع الفقرة الأول من غير ما تبص، وبعدين اسمع وانت بتقرا، وبعدين اقراها بصوت عالي. دوس على أي كلمة تسمع نطقها.</p>'
+   +'<div class="card"><h3 class="en">'+esc(r.title)+'</h3><div class="row" style="margin:8px 0"><button class="pri" id="pl">▶ اسمع الفقرة</button><button id="sl">🐢 أبطأ</button><button id="st2">■</button><button id="tg">إخفاء/إظهار النص</button></div>'
+   +'<div class="para en" id="tx">'+r.text.split("\n\n").map(function(par){return '<p>'+par.split(/(\s+)/).map(function(w){return /\S/.test(w)?'<span class="w">'+esc(w)+'</span>':w}).join("")+'</p>'}).join("")+'</div></div>'
+   +'<div class="card"><h3>المعنى بالعربي</h3><p>'+esc(r.ar)+'</p></div>'
+   +'<div class="card"><h3>سجّل نفسك وانت بتقرا الفقرة</h3><div class="row"><button class="rec" id="rc">🎙 سجّل</button></div><div id="ro" style="margin-top:8px"></div></div>';
+  document.getElementById("pl").onclick=function(){stop();say(r.text)}; document.getElementById("sl").onclick=function(){stop();say(r.text,{rate:0.7})};
+  document.getElementById("st2").onclick=stop; document.getElementById("tg").onclick=function(){document.getElementById("tx").classList.toggle("hide")};
+  st.querySelectorAll(".w").forEach(function(w){w.onclick=function(){stop();say(w.textContent.replace(/[^A-Za-z0-9'’-]/g,""),{rate:0.8})}});
+  var rc=document.getElementById("rc");rc.onclick=function(){toggleRec(rc,document.getElementById("ro"))} },
+ vocab:function(l,st){
+  st.innerHTML='<h2>2 · كلمات وعبارات الشغل</h2><p class="small muted">اسمع كل كلمة، وقولها 3 مرات، وبعدين قول الجملة كاملة.</p><div class="card" style="overflow-x:auto"><table><thead><tr><th>Word</th><th>النطق</th><th>المعنى</th><th>Example</th><th></th></tr></thead><tbody>'
+   +l.vocab.map(function(v,i){return '<tr><td class="en"><b>'+esc(v.t)+'</b></td><td class="mono small">'+esc(v.ipa)+'</td><td>'+esc(v.ar)+'</td><td class="en small">'+esc(v.ex)+'</td><td><button data-i="'+i+'" aria-label="Play">▶</button></td></tr>'}).join("")+'</tbody></table></div>';
+  st.querySelectorAll("button[data-i]").forEach(function(b){b.onclick=function(){var v=l.vocab[+b.dataset.i];stop();say(v.t,{rate:0.8}).then(function(){return say(v.ex)})}}) },
+ pron:function(l,st){ var p=l.pron;
+  st.innerHTML='<h2>3 · نطق: '+esc(p.focus)+'</h2><div class="card"><p>'+esc(p.explainAr)+'</p></div>'
+   +(p.pairs?'<h3>Minimal pairs — اسمع الفرق</h3><div class="pairs">'+p.pairs.map(function(x){return x.map(function(w){return '<button data-w="'+esc(w)+'">'+esc(w)+'</button>'}).join("")}).join("")+'</div>':'')
+   +'<h3 style="margin-top:16px">قول الجمل دي وافحص نطقك</h3>'+p.drills.map(function(d,i){return '<div class="line"><div class="t en">'+esc(d)+'</div><div class="row"><button data-p="'+i+'">▶</button><button data-c="'+i+'">✔ افحص نطقي</button></div><div id="pc'+i+'"></div></div>'}).join("");
+  st.querySelectorAll("button[data-w]").forEach(function(b){b.onclick=function(){stop();say(b.dataset.w,{rate:0.75})}});
+  st.querySelectorAll("button[data-p]").forEach(function(b){b.onclick=function(){stop();say(p.drills[+b.dataset.p])}});
+  st.querySelectorAll("button[data-c]").forEach(function(b){b.onclick=function(){var i=+b.dataset.c;check(p.drills[i],document.getElementById("pc"+i),l.id+":pron"+i)}}) },
+ shadow:function(l,st){
+  st.innerHTML='<h2>4 · Shadowing</h2><div class="note">الطريقة: اسمع الجملة، وبعدين قولها <b>مع</b> الصوت في نفس اللحظة، مقلّد السرعة والنغمة والوقفات. ابدأ بـ 0.75× وبعدين 1×. كرّر كل جملة لحد ما تطلع من غير تفكير.</div>'
+   +l.shadow.map(function(s,i){return '<div class="line"><div class="t en">'+esc(s.en)+'</div><div class="small muted">'+esc(s.ar)+(s.tip?' · <b>'+esc(s.tip)+'</b>':'')+'</div><div class="row"><button data-p="'+i+'">▶</button><button data-x="'+i+'">🔁 ×3</button><button class="rec" data-r="'+i+'">🎙 سجّل</button><button data-c="'+i+'">✔ افحص</button></div><div id="so'+i+'"></div><div id="sc'+i+'"></div></div>'}).join("")
+   +'<div class="row" style="margin-top:12px"><button class="pri" id="all">▶ شغّل الكل ورا بعض</button></div>';
+  st.querySelectorAll("button[data-p]").forEach(function(b){b.onclick=function(){stop();say(l.shadow[+b.dataset.p].en)}});
+  st.querySelectorAll("button[data-x]").forEach(function(b){b.onclick=function(){stop();var t=l.shadow[+b.dataset.x].en;say(t).then(function(){return say(t)}).then(function(){return say(t)})}});
+  st.querySelectorAll("button[data-r]").forEach(function(b){b.onclick=function(){toggleRec(b,document.getElementById("so"+b.dataset.r))}});
+  st.querySelectorAll("button[data-c]").forEach(function(b){b.onclick=function(){var i=+b.dataset.c;check(l.shadow[i].en,document.getElementById("sc"+i),l.id+":sh"+i)}});
+  document.getElementById("all").onclick=function(){stop();l.shadow.reduce(function(pr,s){return pr.then(function(){return say(s.en)}).then(function(){return new Promise(function(r){setTimeout(r,1800)})})},Promise.resolve())} },
+ listen:function(l,st){ var d=l.listen, va=+vSel.value, vb=altVoice();
+  st.innerHTML='<h2>5 · Listening</h2><p class="small muted">'+esc(d.contextAr)+' اسمع مرتين من غير النص، وجاوب، وبعدين افتح النص.</p><div class="card"><div class="row"><button class="pri" id="pl">▶ اسمع المحادثة</button><button id="sl">🐢 أبطأ</button><button id="st2">■</button><button id="tg">إظهار النص</button></div>'
+   +'<div class="dlg en hide" id="tx" style="margin-top:12px">'+d.lines.map(function(x){return '<p><b>'+esc(x.s)+'</b>'+esc(x.en)+'</p>'}).join("")+'</div></div>'
+   +d.questions.map(function(q,qi){return '<div class="q"><div><b>'+(qi+1)+'.</b> '+esc(q.prompt)+'</div>'+q.options.map(function(o,oi){return '<label><input type="radio" name="lq'+qi+'" value="'+oi+'"> <span>'+esc(o)+'</span></label>'}).join("")+'<div class="small muted" id="le'+qi+'"></div></div>'}).join("");
+  function play(rate){stop();d.lines.reduce(function(pr,x){return pr.then(function(){return say(x.en,{voice:x.s===d.lines[0].s?va:vb,rate:rate})})},Promise.resolve())}
+  document.getElementById("pl").onclick=function(){play()}; document.getElementById("sl").onclick=function(){play(0.7)}; document.getElementById("st2").onclick=stop;
+  document.getElementById("tg").onclick=function(){document.getElementById("tx").classList.toggle("hide")};
+  d.questions.forEach(function(q,qi){st.querySelectorAll('input[name="lq'+qi+'"]').forEach(function(inp){inp.onchange=function(){var ok=+inp.value===q.correct;
+    st.querySelectorAll('input[name="lq'+qi+'"]').forEach(function(x){x.parentNode.className=+x.value===q.correct?"right":(x===inp?"wrong":"")}); document.getElementById("le"+qi).textContent=q.explanation}})}) },
+ speak:function(l,st){
+  st.innerHTML='<h2>6 · Speaking</h2><div class="note">اتكلم بصوت عالي وانت مسجّل. ما تكتبش الإجابة الأول. الهدف إنك تتكلم من غير ما تترجم في دماغك، حتى لو فيه غلطات صغيرة.</div>'
+   +l.speak.map(function(s,i){return '<div class="card"><h3>'+esc(s.promptAr)+'</h3><p class="en">'+esc(s.promptEn)+'</p><div class="small muted">استخدم: <span class="en">'+esc(s.useEn)+'</span></div>'
+    +'<div class="row" style="margin:10px 0"><span class="timer" id="tm'+i+'">'+s.seconds+'</span><button class="rec" data-r="'+i+'">🎙 ابدأ</button><button data-m="'+i+'">شوف إجابة نموذجية</button></div><div id="ro'+i+'"></div>'
+    +'<div id="md'+i+'" hidden><div class="en card" style="background:var(--bg)">'+esc(s.model)+'</div><button data-pm="'+i+'">▶ اسمع النموذج</button></div>'
+    +'<ul class="check">'+s.checklist.map(function(c){return '<li><label><input type="checkbox"> '+esc(c)+'</label></li>'}).join("")+'</ul></div>'}).join("");
+  st.querySelectorAll("button[data-r]").forEach(function(b){var i=+b.dataset.r,t=null;b.onclick=function(){var tm=document.getElementById("tm"+i),out=document.getElementById("ro"+i);
+    if(rec&&rec.state==="recording"){rec.stop();clearInterval(t);return} var left=l.speak[i].seconds;tm.textContent=left;startRec(b,out);
+    t=setInterval(function(){left--;tm.textContent=left;if(left<=0){clearInterval(t);if(rec&&rec.state==="recording")rec.stop()}},1000)}});
+  st.querySelectorAll("button[data-m]").forEach(function(b){b.onclick=function(){document.getElementById("md"+b.dataset.m).hidden=false}});
+  st.querySelectorAll("button[data-pm]").forEach(function(b){b.onclick=function(){stop();say(l.speak[+b.dataset.pm].model)}}) },
+ write:function(l,st){ var w=l.write, k=l.id+":draft";
+  st.innerHTML='<h2>7 · كتابة</h2><div class="card"><p>'+esc(w.taskAr)+'</p><textarea id="dr" placeholder="Write here…"></textarea><div class="small muted">بيتحفظ على المتصفح ده بس.</div></div>'
+   +'<button id="sm">شوف نموذج</button><div id="md" hidden class="card en" style="white-space:pre-wrap">'+esc(w.model)+'</div>';
+  var dr=document.getElementById("dr"); dr.value=P()[k]||""; dr.oninput=function(){save(k,dr.value)};
+  document.getElementById("sm").onclick=function(){document.getElementById("md").hidden=false} }
+};
+function route(){ if(!data)return; var h=location.hash.slice(1); if(!h||h==="home"){home();return}
+  var all=[];data.modules.forEach(function(m){all=all.concat(m.lessons)}); var l=all.find(function(x){return x.id.toLowerCase()===h}); if(l){lesson(l);window.scrollTo(0,0)}else home() }
+window.addEventListener("hashchange",route);
+fetch(window.KH_DATA).then(function(r){return r.json()}).then(function(d){data=d;document.title=d.titleEn;route()}).catch(function(){app.innerHTML='<p>مش قادر أحمّل الكورس.</p>'});
+})();
+</script>
+</body>
+</html>
