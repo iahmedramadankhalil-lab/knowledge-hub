@@ -121,12 +121,12 @@ main{min-width:0;display:flex;flex-direction:column;gap:28px}
   function home(){
     var c=course,h='<section class="hero"><div class="eyebrow">'+esc(c.stageTitle)+'</div><h1>'+esc(c.titleAr)+'</h1><div class="en">'+esc(c.titleEn)+'</div>'
       +'<div class="meta"><span class="chip">'+c.level+'</span><span class="chip">'+c.hours+' ساعة</span><span class="chip">آخر مراجعة '+c.lastReviewed+'</span></div>'
-      +'<p>'+esc(c.descriptionAr)+'</p><div class="bar" aria-label="التقدم"><i style="width:'+pct()+'%"></i></div><div class="note">خلصت '+pct()+'% من دروس Module 1. التقدم محفوظ على المتصفح ده بس.</div></section>'
+      +'<p>'+esc(c.descriptionAr)+'</p><div class="bar" aria-label="التقدم"><i style="width:'+pct()+'%"></i></div><div class="note">خلصت '+pct()+'% من دروس الكورس. التقدم محفوظ على المتصفح ده بس.</div></section>'
       +'<section><h2>في آخر الكورس هتقدر</h2><ol class="outcomes">'+c.learningOutcomes.map(function(o){return '<li>'+esc(o)+'</li>'}).join("")+'</ol></section>'
       +'<section><h2>الـ Modules</h2><div class="modgrid">';
     c.modules.forEach(function(m){
       h+='<div class="modcard'+(m.available?'':' off')+'"><div class="eyebrow">'+m.id+' · '+m.lessons.length+' دروس</div><h3>'+esc(m.titleAr)+'</h3><div class="note" dir="ltr" style="text-align:right">'+esc(m.titleEn)+'</div>'
-        +(m.available?'<a class="btn" href="#'+slug(m.lessons[0].id)+'">ابدأ</a>':'<span class="note">في الـ Sample ده Module 1 بس</span>')+'</div>';
+        +(m.available?'<a class="btn" href="#'+slug(m.lessons[0].id)+'">ابدأ</a>':'<span class="note">قريبًا</span>')+'</div>';
     });
     h+='</div></section><section><h2>المراجع</h2><ul class="note">'+c.references.map(function(r){return '<li dir="ltr" style="text-align:left">'+esc(r)+'</li>'}).join("")+'</ul></section>';
     return h;
@@ -143,7 +143,7 @@ main{min-width:0;display:flex;flex-direction:column;gap:28px}
   function lessonView(id){
     var idx=lessons.findIndex(function(l){return l.id===id}),l=lessons[idx];
     var body=marked.parse(l.bodyMd).replace(/<table>/g,'<div class="tablebox"><table>').replace(/<\/table>/g,'</table></div>');
-    var prev=lessons[idx-1],next=lessons[idx+1];
+    var prev=lessons[idx-1],next=lessons[idx+1];if(next&&next.mod!==l.mod)next=null;
     return '<article class="lesson"><div class="eyebrow">'+l.mod+' · Lesson '+l.id.replace("L","").replace("-",".")+'</div><h1 style="font-size:clamp(26px,3.6vw,34px);margin-top:6px">'+esc(l.titleAr)+'</h1>'
       +'<div class="note" dir="ltr" style="text-align:right">'+esc(l.titleEn)+'</div>'+body
       +'<h2>Knowledge check</h2>'+qblock(l.check||[],"c:"+l.id)+'</article>'

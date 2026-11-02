@@ -87,8 +87,9 @@ summary::-webkit-details-marker{display:none}
   function state(c){
     if(!c.available)return{k:"soon",t:"قريبًا",d:0};
     var p=prog(c.id),d=Object.keys(p).filter(function(k){return /^L\d-\d$/.test(k)&&p[k]}).length;
-    var quiz=p["quiz-M1"];
-    if(c.lessons&&d>=3&&quiz>=80)return{k:"done",t:"Module 1 خلص",d:d,q:quiz};
+    var qs=["M1","M2","M3","M4"].map(function(m){return p["quiz-"+m]}).filter(function(v){return v!=null});
+    var quiz=qs.length?qs[qs.length-1]:null,passed=qs.length===4&&qs.every(function(v){return v>=80});
+    if(c.lessons&&d>=c.lessons&&passed)return{k:"done",t:"خلص",d:d,q:quiz};
     if(d>0||quiz!=null)return{k:"prog",t:"شغال فيه",d:d,q:quiz};
     return{k:"avail",t:"متاح",d:0};
   }
@@ -98,7 +99,8 @@ summary::-webkit-details-marker{display:none}
   document.getElementById("stats").innerHTML=stats.map(function(s){return '<div class="stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'}).join("");
 
   var first=all[0],st=first.st;
-  var nextLesson=st.d<3?"Lesson 1."+(st.d+1):"Quiz الـ Module 1";
+  var order=["1.1","1.2","1.3","2.1","2.2","2.3","2.4","3.1","3.2","3.3","4.1","4.2"];
+  var nextLesson=st.d<order.length?"Lesson "+order[st.d]:"راجع الـ Quizzes";
   document.getElementById("next").innerHTML='<div><div class="eyebrow">الخطوة الجاية</div><h3>'+esc(first.ar)+' · '+nextLesson+'</h3><span class="note mono">'+first.id+'</span></div><a class="btn" href="'+COURSE_URL+'">'+(st.k==="avail"?"ابدأ الكورس":"كمّل")+'</a>';
 
   document.getElementById("ladder").innerHTML=MAP.stages.map(function(s,i){
